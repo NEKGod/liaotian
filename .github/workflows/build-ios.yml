@@ -1,10 +1,12 @@
 name: Build iOS
 
 on:
-  push:
-    tags:
-      - 'v*'
   workflow_dispatch:
+    inputs:
+      development_team:
+        description: 'Apple Development Team ID'
+        required: true
+        type: string
 
 jobs:
   build-ios:
@@ -47,7 +49,13 @@ jobs:
         run: pnpm tauri ios init
 
       - name: Build iOS (no signing)
-        run: pnpm tauri ios build --export-method app-store-connect
+        run: |
+          # 设置开发团队 ID
+          if [ -n "${{ github.event.inputs.development_team }}" ]; then
+            export APPLE_DEVELOPMENT_TEAM="${{ github.event.inputs.development_team }}"
+          fi
+
+          pnpm tauri ios build --export-method app-store-connect
         env:
           NODE_OPTIONS: --max_old_space_size=8192
 
