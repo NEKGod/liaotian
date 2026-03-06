@@ -47,7 +47,7 @@ jobs:
         run: pnpm tauri ios init
 
       - name: Build iOS (no signing)
-        run: pnpm tauri ios build --export-method development
+        run: pnpm tauri ios build --export-method debugging
         env:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
