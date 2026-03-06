@@ -34,7 +34,6 @@
 import { useI18n } from 'vue-i18n'
 import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow'
 import { arch, version } from '@tauri-apps/plugin-os'
-import dayjs from 'dayjs'
 import { getOSType, isWindows } from '@/utils/PlatformConstants'
 import pkg from '~/package.json'
 
@@ -46,8 +45,6 @@ const _pkg = reactive({
 const osType = ref()
 const osArch = ref()
 const osVersion = ref()
-// 使用day.js获取当前年份
-const currentYear = dayjs().year()
 
 const element = ref<HTMLElement | null>(null)
 /** 鼠标移动时，对元素进行旋转的指数 */

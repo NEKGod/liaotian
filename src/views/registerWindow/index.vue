@@ -160,22 +160,6 @@
       </n-flex>
     </n-flex>
 
-
-    <!-- 星标提示框 -->
-    <n-modal v-model:show="starTipsModal" :mask-closable="false" class="rounded-8px" transform-origin="center">
-      <div class="bg-[--bg-edit] w-380px h-fit box-border flex flex-col">
-        <n-flex vertical class="w-full h-fit">
-          <video class="w-full h-240px rounded-t-8px object-cover" src="@/assets/video/star.mp4" autoplay loop />
-          <n-flex vertical :size="10" class="p-14px">
-            <p class="text-(16px #303030)">{{ t('auth.register.modal.title') }}</p>
-            <p class="text-(12px #808080) leading-5">{{ t('auth.register.modal.desc') }}</p>
-
-            <n-flex :size="10" class="ml-auto">
-          </n-flex>
-        </n-flex>
-      </div>
-    </n-modal>
-
     <!-- 邮箱验证码输入弹窗 -->
     <n-modal v-model:show="emailCodeModal" :mask-closable="false" class="rounded-8px" transform-origin="center">
       <div class="bg-#f0f0f0 dark:bg-#303030 w-380px h-fit box-border flex flex-col">
@@ -224,7 +208,6 @@
 
 <script setup lang="ts">
 import { getCurrentWebviewWindow, WebviewWindow } from '@tauri-apps/api/webviewWindow'
-import dayjs from 'dayjs'
 import { darkTheme, lightTheme, type FormInst } from 'naive-ui'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
@@ -303,9 +286,7 @@ const btnText = computed(() => {
   return t('auth.register.actions.send_code')
 })
 // 使用day.js获取当前年份
-const currentYear = dayjs().year()
 const registerForm = ref<FormInst | null>(null)
-const starTipsModal = ref(false)
 const emailCodeModal = ref(false)
 
 // 邮箱验证码PIN输入
@@ -513,16 +494,11 @@ const register = async () => {
   }
 }
 
-const handleStar = () => {
-  starTipsModal.value = false
-  localStorage.setItem('star', '1')
-}
 
 onMounted(async () => {
   await getCurrentWebviewWindow().show()
   await nextTick(() => {
-    starTipsModal.value = localStorage.getItem('star') !== '1'
-  })
+    })
 })
 
 // 组件卸载时清理计时器
