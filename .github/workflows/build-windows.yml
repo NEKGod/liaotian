@@ -39,10 +39,18 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Remove updater pubkey for CI build
+        shell: bash
+        run: |
+          # 临时移除 pubkey 以跳过签名
+          sed -i 's/"pubkey":.*,/"pubkey": "",/g' src-tauri/tauri.conf.json
+
       - name: Build Windows
         run: pnpm tauri build
         env:
           NODE_OPTIONS: --max_old_space_size=8192
+          TAURI_SIGNING_PRIVATE_KEY: ""
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ""
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
