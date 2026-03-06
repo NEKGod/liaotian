@@ -48,6 +48,8 @@ jobs:
 
       - name: Build iOS (no signing)
         run: pnpm tauri ios build --export-method debugging
+        env:
+          NODE_OPTIONS: --max_old_space_size=8192
 
       - name: Upload IPA
         uses: actions/upload-artifact@v4
